@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ ! -f $2/terraform ]; then
+  TERRAFORM_URL=https://releases.hashicorp.com/terraform/0.11.10/terraform_0.11.10_linux_amd64.zip
+
+  curl $TERRAFORM_URL -o $2/terraform.zip
+  unzip $2/terraform.zip -d $2
+  rm $2/terraform.zip
+fi
+
+mkdir $1/.bin
+cp $2/terraform $1/.bin/terraform
+
+mkdir $1/.profile.d
+echo 'export PATH=$PATH:~/.bin' > $1/.profile.d/add-terraform-to-path.sh
